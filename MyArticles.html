@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="MyArticles">
+
+    <div class="topnav" id="myTopnav">
+        <div><a href="index.html"><img src="blog.png" alt="MyBlog"></a></div>
+        <div class="title">
+            <h1>MyBlog</h1>
+        </div>
+
+        <div class="username"><a href="Login.html"><i id="usernam" class="fa fa-user"></i> </a></div>
+
+
+    </div>
+
+
+    <section class="articles">
+        <h2>My articles</h2>
+        <div class="latest">
+
+        </div>
+
+    </section>
+
+    <section class="add">
+        <h2> Add article</h2>
+        <form action="account.html">
+            <div class="addArticle">
+                <div>
+                    <h3>Title</h3><input type="text" id="aT">
+                </div>
+                <div>
+                    <h3>Image URL</h3><input type="text" id="aI">
+                </div>
+                <div>
+                    <h3>Text</h3><textarea cols="90" rows="30" name="at" cols="30" rows="10"
+                            placeholder="Your Text Goes Here.." id="aX"></textarea>
+                </div>
+                <div>
+                    <h3><button onclick="addArticle();">Add</button></h3>
+                </div>
+            </div>
+
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer">
+            <div class="hlca">
+                <div>Home</div>
+                <div class="logout"><a href="MyArticles.html"><i class="fa fa-sign-out"></i> Logout</a></div>
+                <div>Contact us</div>
+                <div>About us</div>
+            </div>
+            <div class="fit">
+                <div><i class="fa fa-facebook"></i> Facebook</div>
+                <div><i class="fa fa-instagram"></i> Instagram</div>
+                <div><i class="fa fa-twitter"></i> Twitter</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("usernam").innerHTML = " " + localStorage.getItem("user");
+        let loggedInUser = localStorage.getItem("user");
+        let articles = JSON.parse(localStorage.getItem('articles')) || [];
+
+        function populateArticles() {
+            let articlesContainer = document.querySelector('.articles .latest');
+
+            articlesContainer.innerHTML = '';
+
+            articles.forEach((article, index) => {
+                if (article.user === loggedInUser) {
+                    let div = document.createElement('div');
+                    div.innerHTML = `
+                        <div>
+                            <h4>${article.title}</h4>
+                        </div>
+                        <div><img src="${article.image}" alt=""></div>
+                        
+                        <div class="eD">
+                            <button onclick="editArticle(${index})"><i class="fa fa-edit"></i> Edit</button>
+                            <button onclick="deleteArticle(${index})"><i class="fa fa-trash"></i> Delete</button>
+                        </div>
+                    `;
+                    articlesContainer.appendChild(div);
+                }
+            });
+        }
+
+        window.onload = populateArticles;
+
+        function deleteArticle(index) {
+            articles.splice(index, 1);
+            localStorage.setItem('articles', JSON.stringify(articles));
+            populateArticles();
+            alert('Article deleted successfully');
+        }
+
+        function editArticle(index) {
+            // Redirect to edit page with article index as parameter
+            window.location.href = 'EditArticle.html?index=' + index;
+        }
+
+        function addArticle() {
+            let title = document.getElementById("aT").value;
+            let articleText = document.getElementById("aX").value;
+            let image = document.getElementById("aI").value;
+
+            if (title && articleText && image) {
+                articles.push({ user: loggedInUser, title, article: articleText, image });
+                localStorage.setItem('articles', JSON.stringify(articles));
+                populateArticles();
+                document.getElementById("aT").value = '';
+                document.getElementById("aX").value = '';
+                document.getElementById("aI").value = '';
+                alert('Article was added successfully');
+            } else {
+                alert("All fields are required");
+            }
+        }
+    </script>
+</body>
+
+</html>

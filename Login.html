@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+
+<body class="pageLogin">
+
+
+    <div class="connect" >
+        <div><a href="index.html"><img src="rblog.png" alt="MyBlog"></a></div>
+        
+        <div>Email:<br><br><input id="s1" type="text"><br><br></div>
+        <div>
+            Password:<br><br>
+            <input id="s2" type=""><br><br>
+        </div>
+        
+        <Button id="lgBtn"type="submit" onclick="connect()">Login</Button>
+<div class="signup"><a href="signup.html">Sign up</a></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <footer></footer>
+    <script>
+         if(localStorage.getItem("user")!==""&&localStorage.getItem("user")!==null){
+
+window.location.href ='account.html';
+}
+        // Retrieve the users array from localStorage
+        let usersString = localStorage.getItem('users');
+    
+        // Parse the JSON string back into an array
+        let users = JSON.parse(usersString);
+        console.log(users);
+    
+        function connect() {
+          let sEmail = document.getElementById("s1").value;
+          let sPassword = document.getElementById("s2").value;
+          let authenticated = false;
+    
+          
+          users.forEach(user => {
+            if (user.email === sEmail && user.password === sPassword) {
+               
+                authenticated = true;
+                localStorage.setItem("user",user.username);
+            }
+          });
+          //let ur=user.username;
+          if (authenticated) {
+            
+            alert('Login successful!');
+            
+            //localStorage.setItem("user",ur);
+            window.location.href ='account.html';
+         
+          } else {
+            alert('Invalid email or password!');
+          }
+        }
+      </script>
+</body>

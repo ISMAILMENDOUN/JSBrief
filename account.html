@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="topnav" id="myTopnav">
+    <div><a href="index.html"><img src="blog.png" alt="MyBlog"></a></div>
+    <div class="title">
+      <h1>MyBlog</h1>
+    </div>
+    <div class="maBtn"><a href="MyArticles.html"><i class="fa fa-newspaper-o"></i> My articles</a></div>
+    <div class="username"><a href="Login.html"><i id="usernam" class="fa fa-user"> UserName</i></a></div>
+     
+
+  </div>
+  <section class="main">
+    <div class="article1">
+      <div>
+        <h2 id="t1">Article1</h2>
+        <p id="p1">Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure
+          partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne
+          ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem
+          Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs
+          de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com
+          le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins,
+          en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le
+          Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des
+          touches d'humour.Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure
+          partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne
+          ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem
+          Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs
+          de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com
+          le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins,
+          en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le
+          Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des
+          touches d'humour.</p>
+      </div>
+      <div class="imgM"><img id="i2" src="blog.png" alt=""></div>
+    </div>
+
+  </section>
+  
+  <section class="articles">
+    <h3>Latest articles</h3>
+    <div class="latest">
+      
+    </div>
+
+  </section>
+  <section class="articles1">
+    <h3>Recommended</h3>
+    <div class="recommended">
+      
+      
+    </div>
+
+  </section>
+
+<footer >
+<div class="footer">
+  <div class="hlca"><div>Home</div>
+  <div class="logout"><a href="javascript:void(0);" onclick="logout()"><i class="fa fa-sign-out"></i> Logout</a></div>
+  <div>Contact us</div>
+  <div>About us</div></div>
+<div class="fit">
+  <div><i class="fa fa-facebook"></i> Facebook</div>
+<div><i class="fa fa-instagram"></i> Instagram</div>
+<div><i class="fa fa-twitter"></i> Twitter</div>
+
+</div>
+
+</div>
+</footer>
+<script>
+    document.getElementById("usernam").innerHTML=" "+localStorage.getItem("user");
+    const articles = JSON.parse(localStorage.getItem('articles')) || [];
+
+    const latestArticlesContainer = document.querySelector('.latest');
+    const recommendedArticlesContainer = document.querySelector('.recommended');
+document.getElementById("t1").textContent = articles[0].title;
+document.getElementById("p1").textContent = articles[0].article;
+document.getElementById("i2").src = articles[0].image;
+
+    articles.forEach(article => {
+      const articleElement = document.createElement('div');
+      articleElement.innerHTML = `
+        <div>
+          <h4>${article.title}</h4>
+        </div>
+        <div><img src="${article.image}" alt=""></div>
+        <div><h5>${article.user}</h5></div>
+      `;
+      latestArticlesContainer.appendChild(articleElement.cloneNode(true));
+      recommendedArticlesContainer.appendChild(articleElement.cloneNode(true));
+    });
+  
+document.getElementById("usernam").innerHTML=" "+localStorage.getItem("user");
+function logout(){
+localStorage.setItem("user","");
+window.location.href="index.html";
+
+}
+
+</script>
+</body>
+
+</html>

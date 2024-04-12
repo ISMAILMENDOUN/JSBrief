@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+
+<body class="pageLogin">
+
+
+    <div class="signupF" >
+        <div><a href="index.html"><img src="rblog.png" alt="MyBlog"></a></div>
+        <div>Username<br><br><input id="t" type="text"><br><br></div>
+        <div>Email:<br><br><input id="t1"type="text"><br><br></div>
+        <div>
+            Password:<br><br>
+            <input id="t2" type=""><br><br>
+        </div>
+        <div>
+            Confirm Password:<br><br>
+            <input id="t3"type=""><br><br>
+        </div>
+        
+        <Button id="lgBtn" type="submit" onclick="test()">Sign up</Button>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <footer></footer>
+    <script>
+    
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        function test() {
+          let username=document.getElementById("t").value;
+          let email = document.getElementById("t1").value;
+          let password = document.getElementById("t2").value;
+          let confirmPassword = document.getElementById("t3").value;
+    
+          if (password === confirmPassword) {
+            users.push({ username,email, password, confirmPassword });
+          } else {
+            alert("Passwords do not match");
+            return; // Exit function if passwords do not match
+          }
+    
+          // Store users array in localStorage
+          localStorage.setItem('users', JSON.stringify(users));
+    
+          // Redirect to the second page
+          window.location.href ='Login.html';
+        }
+      </script>
+</body>
+</html>
