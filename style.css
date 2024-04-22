@@ -52,17 +52,17 @@ body {
 }
 
 
-.log {
+.log ,.username{
 
-  margin-left: 70% auto;
+  margin-left: 70%;
   margin-top: 3%;
 }
-
-.indexBody .log {
+/*Useless/*
+/*.indexBody .log {
 
   margin-left: 20%;
   margin-top: 3%;
-}
+}*/
 
 .title {
 
@@ -370,10 +370,22 @@ margin-bottom: -10%;
     margin-left: 40%;
   }
   .signupF{height:auto;}
+  .editArticle{
 
-@media screen and (max-width:768) {}
+    margin-top: 10vh;
+    margin-left: -11vw;
+  }
 
-@media screen and (max-width:480px) {
+
+@media screen and (min-width:769px){
+.username,.log{
+  margin-left:auto;
+}
+
+  
+}
+
+@media screen and (max-width:768px) {
   #xMenu {
     float: right;
     margin-top: 5%;
@@ -384,6 +396,7 @@ margin-bottom: -10%;
   #menu {
     color: black;
     margin-bottom: 20%;
+    margin-right:2vw;
     float: right;
     display: block;
   }
@@ -392,7 +405,7 @@ margin-bottom: -10%;
     display: none;
   }
 
-  .log {
+  .log{
     display: none;
   }
 
@@ -554,12 +567,29 @@ margin-top: 20%;
   width:40vw;
 
 }
+.connect{height: auto;}
 #search1{
   width:40vw;
 }
  #t1{
   align-self: center;
 }
+.footer{
+  padding-inline: 10vw;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.fit,.hlca{
+margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+}
+.aA #t1{
+  width:auto;
+  margin-left: 4vw;
+}
+
 }
 
 
