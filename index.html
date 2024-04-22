@@ -7,14 +7,36 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="indexBody">
 
   <div class="topnav" id="myTopnav">
-    <div><a href="index.html"><img src="blog.png" alt="MyBlog"></a></div>
+    <div ><a href="index.html"><img id="img1"src="blog.png" alt="MyBlog"></a></div>
     <div class="title">
       <h1>MyBlog</h1>
     </div>
+    <div id="searchBar">
+      <ul>
+        <li id="l1"><input type="text" id="search"></li>
+        <li class="l2"><a href="javascript:void(0);" onclick="search1();"><i
+              class="fa fa-magnifying-glass"></i>Search</a></li>
+      </ul>
+    </div>
     <div class="log"><a href="Login.html">Login</a></div>
+  </div>
+  <a id="menu" href="#" onclick="showMenu()"><i class="fa fa-bars"></i></a>
+  <div class="topnavResponsive">
+
+    <a id="xMenu" href="#" onclick="xMenu()" ><i class="fa fa-times"></i></a>
+    <ul>
+      <li id="l1"><input type="text" id="search1">
+        <a href="#lA" onclick="search1();"><i class="fa fa-search"></i></a>
+      </li>
+      <li id="l2"><a href="index.html">Home</a></li>
+      <li id="l2"><a href="Login.html">Login</a></li>
+      <li id="l2"><a href="aboutUs.html">About Us</a></li>
+      <li id="l2"><a href="contactUs.html">Contact Us</a></li>
+    </ul>
+
   </div>
 
   <section class="main">
@@ -24,46 +46,110 @@
         <p id="p1">Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure
           partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne
           ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem
-          Ipsum, vous devez être sûr qu'il n'y a rien
+          Ipsum, vous devez être sûr qu'il n'y a rien</p>
       </div>
-      <div class="imgM" id="i1"><a href="article.html"><img id="i2" src="blog.png" alt=""></a></div>
+      <div class="imgM" id="i1"><a  href="article.html?index=0"><img id="i2" src="blog.png" alt=""></a></div>
     </div>
   </section>
 
   <section class="articles">
-    <h3>Latest articles</h3>
+    <h3 id="lA">Latest articles</h3>
     <div class="latest"></div>
   </section>
 
   <section class="articles1">
-    <h3>Recommended</h3>
+    <h3 id="rA">Recommended</h3>
     <div class="recommended"></div>
   </section>
 
   <footer>
     <div class="footer">
       <div class="hlca">
-        <div>Home</div>
-        <div>Login</div>
-        <div>Contact us</div>
-        <div>About us</div>
+        <div><a href="index.html">Home</a></div>
+        <div><a href="Login.html">Login</a></div>
+        <div><a href="index.html">Contact us</a></div>
+        <div><a href="index.html">About us</a></div>
       </div>
       <div class="fit">
-        <div><i class="fa fa-facebook"></i> Facebook</div>
-        <div><i class="fa fa-instagram"></i> Instagram</div>
-        <div><i class="fa fa-twitter"></i> Twitter</div>
+        <div><a href="https://facebook.com"><i class="fa fa-facebook"></i> Facebook</a></div>
+        <div><a href="https://instagram.com"><i class="fa fa-instagram"></i> Instagram</a></div>
+        <div><a href="https://twitter.com"><i class="fa fa-twitter"></i> Twitter</a></div>
       </div>
     </div>
   </footer>
+  <script>
+    let user = localStorage.getItem("user");
+    if (user != "" && user != null) {
 
+      window.location.href = "account.html";
+
+    }
+
+
+
+
+    let srch;
+    let srch1;
+    srch = "";
+    function search1() {
+      document.querySelector('.latest').innerHTML = "";
+      srch = document.getElementById("search").value;
+      if (srch == "") {
+
+        srch = document.getElementById("search1").value;
+
+      }
+      srch1 = srch.toLowerCase().trim();
+      console.log(srch);
+
+      const articles = JSON.parse(localStorage.getItem('articles')) || [];
+
+      const latestArticlesContainer = document.querySelector('.latest');
+      const recommendedArticlesContainer = document.querySelector('.recommended');
+      document.getElementById("t1").textContent = articles[0].title;
+      document.getElementById("p1").textContent = articles[0].article;
+      document.getElementById("i2").src = articles[0].image;
+
+      articles.forEach(article => {
+        if (article.title.toLowerCase().includes(srch1) && srch1 !== "") {
+          const articleElement = document.createElement('div');
+          articleElement.innerHTML = `
+    <div>
+      <h4>${article.title}</h4>
+    </div>
+    <div><a href="article.html?index=${articles.indexOf(article)}"><img src="${article.image}" alt=""></a></div>
+    <div><h5>${article.user}</h5></div>
+  `;
+          latestArticlesContainer.appendChild(articleElement);
+
+          document.querySelector(".main").innerHTML="";
+          recommendedArticlesContainer.innerHTML = "";
+          document.getElementById("lA").innerHTML = "Search result:"
+          document.getElementById("rA").innerHTML = ""
+
+        }
+        else if (srch1 === "") {
+
+          document.getElementById("lA").innerHTML = "Search result:";
+        }
+
+
+      }
+      );
+      let articlesString = JSON.stringify(articles);
+
+      
+    }
+
+  </script>
   <script>
     const articles = JSON.parse(localStorage.getItem('articles')) || [];
 
     const latestArticlesContainer = document.querySelector('.latest');
     const recommendedArticlesContainer = document.querySelector('.recommended');
-document.getElementById("t1").textContent = articles[0].title;
-document.getElementById("p1").textContent = articles[0].article;
-document.getElementById("i2").src = articles[0].image;
+    document.getElementById("t1").textContent = articles[0].title;
+    document.getElementById("p1").textContent = articles[0].article;
+    document.getElementById("i2").src = articles[0].image;
 
     articles.forEach(article => {
       const articleElement = document.createElement('div');
@@ -78,7 +164,24 @@ document.getElementById("i2").src = articles[0].image;
       recommendedArticlesContainer.appendChild(articleElement.cloneNode(true));
     });
     let articlesString = JSON.stringify(articles);
+
+
+    function showMenu() {
+      
+      document.querySelector(".topnavResponsive").style.display = "block";
+      document.querySelector("#menu").style.display = "none"; 
+    };
+
+    function xMenu(){
+
+      document.querySelector(".topnavResponsive").style.display = "none";
+      document.querySelector("#menu").style.display = "block"; 
+
+    }
+
+
   </script>
+
 </body>
 
 </html>

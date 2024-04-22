@@ -12,7 +12,7 @@
 
 
     <div class="connect" >
-        <div><a href="index.html"><img src="rblog.png" alt="MyBlog"></a></div>
+        <div><a href="index.html"><img src="rblog.png" alt="MyBlog" id="imgLog"></a></div>
         
         <div>Email:<br><br><input id="s1" type="text"><br><br></div>
         <div>
@@ -50,24 +50,30 @@ window.location.href ='account.html';
           let sEmail = document.getElementById("s1").value;
           let sPassword = document.getElementById("s2").value;
           let authenticated = false;
-    
+
+          if(sEmail ==="" || sPassword ===""){
+              alert('All fields are required');
+              authenticated=null;
+            }
           
           users.forEach(user => {
+
+            
             if (user.email === sEmail && user.password === sPassword) {
                
                 authenticated = true;
                 localStorage.setItem("user",user.username);
             }
           });
-          //let ur=user.username;
+          
           if (authenticated) {
             
             alert('Login successful!');
             
-            //localStorage.setItem("user",ur);
+            
             window.location.href ='account.html';
          
-          } else {
+          } else if(authenticated===false) {
             alert('Invalid email or password!');
           }
         }

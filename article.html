@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="articleArt">
 
   <div class="topnav" id="myTopnav">
-    <div><a href="index.html"><img src="blog.png" alt="MyBlog"></a></div>
+    <div><a href="index.html"><img id="img1" src="blog.png" alt="MyBlog"></a></div>
     <div class="title">
       <h1>MyBlog</h1>
     </div>
-    <div class="log"><a href="Login.html">Login</a></div>
+    <div id="hLog"class="log"><a href="Login.html">Login</a></div>
   </div>
 
   <section class="main">
@@ -24,6 +24,17 @@
         <p id="pp">Article Content</p>
       </div>
       <div class="imgM1"><img id="ii" src="" alt=""></div>
+
+    </div>
+
+  </section>
+
+  <section>
+    <div class="impression">
+      <div class="like"><a id="myLink1" href="#" onclick="addLike();"><i id="nL" class="fa fa-x  fa-thumbs-up"></i></a>
+      </div>
+      <div class="disLike"><a id="myLink" href="#" onclick="addDislike();"><i id="nD"
+            class="fa fa-x fa-thumbs-down"></i></a></div>
     </div>
   </section>
 
@@ -48,13 +59,13 @@
       </div>
     </form>
   </section>
-  
+
 
   <footer>
     <div class="footer">
       <div class="hlca">
         <div>Home</div>
-        <div>Login</div>
+        <div id="hLog1">Login</div>
         <div>Contact us</div>
         <div>About us</div>
       </div>
@@ -69,7 +80,7 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const index = urlParams.get('index');
-    console.lo
+
 
     let articlesString = localStorage.getItem('articles');
     let articles = JSON.parse(articlesString);
@@ -80,70 +91,187 @@
     document.getElementById("ii").src = selectedArticle.image;
   </script>
   <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const index = urlParams.get('index');
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const index = urlParams.get('index');
 
-  let articlesString = localStorage.getItem('articles');
-  let articles = JSON.parse(articlesString);
+      let articlesString = localStorage.getItem('articles');
+      let articles = JSON.parse(articlesString);
 
-  const selectedArticle = articles[index];
-  document.getElementById("tt").textContent = selectedArticle.title;
-  document.getElementById("pp").textContent = selectedArticle.article;
-  document.getElementById("ii").src = selectedArticle.image;
+      const selectedArticle = articles[index];
+      document.getElementById("tt").textContent = selectedArticle.title;
+      document.getElementById("pp").textContent = selectedArticle.article;
+      document.getElementById("ii").src = selectedArticle.image;
 
-  const commentForm = document.getElementById("commentForm");
-  commentForm.addEventListener("submit", function(event) {
-    event.preventDefault(); 
 
-    const fullName = document.getElementById("fullName").value;
-    const commentText = document.getElementById("commentText").value;
+      const commentForm = document.getElementById("commentForm");
+      commentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const newComment = {
-      fullName: fullName,
-      commentText: commentText
-    };
+        const fullName = document.getElementById("fullName").value;
+        const commentText = document.getElementById("commentText").value;
 
-    if (!selectedArticle.comments) {
-      selectedArticle.comments = [];
-    }
-    selectedArticle.comments.push(newComment);
+        const newComment = {
+          fullName: fullName,
+          commentText: commentText
+        };
 
-    localStorage.setItem('articles', JSON.stringify(articles));
+        if (!selectedArticle.comments) {
+          selectedArticle.comments = [];
+        }
+        selectedArticle.comments.push(newComment);
 
-    document.getElementById("fullName").value = "";
-    document.getElementById("commentText").value = "";
+        localStorage.setItem('articles', JSON.stringify(articles));
 
-    displayComments(selectedArticle);
-  });
+        document.getElementById("fullName").value = "";
+        document.getElementById("commentText").value = "";
 
-  displayComments(selectedArticle);
-});
+        displayComments(selectedArticle);
+      });
 
-function displayComments(selectedArticle) {
-  const commentsList = document.getElementById("commentsList");
-  commentsList.innerHTML = "";
+      displayComments(selectedArticle);
+    });
 
-  if (selectedArticle.comments && selectedArticle.comments.length > 0) {
-    selectedArticle.comments.forEach(comment => {
-      const commentElement = document.createElement('div');
-      commentElement.classList.add('comment');
-      commentElement.innerHTML = `
+    function displayComments(selectedArticle) {
+      const commentsList = document.getElementById("commentsList");
+      commentsList.innerHTML = "";
+
+      if (selectedArticle.comments && selectedArticle.comments.length > 0) {
+        selectedArticle.comments.forEach(comment => {
+          const commentElement = document.createElement('div');
+          commentElement.classList.add('comment');
+          commentElement.innerHTML = `
         <div><strong>${comment.fullName}</strong></div>
         <div>${comment.commentText}</div>
       `;
-      commentsList.appendChild(commentElement);
-      
-      });
-  } else {
-    const noCommentsElement = document.createElement('div');
-    noCommentsElement.textContent = "No comments yet.";
-    commentsList.appendChild(noCommentsElement);
-  }
-}
+          commentsList.appendChild(commentElement);
 
+        });
+      } else {
+        const noCommentsElement = document.createElement('div');
+        noCommentsElement.textContent = "No comments yet.";
+        commentsList.appendChild(noCommentsElement);
+      }
+    }
+    /*let likesString = localStorage.getItem('likes');
+        let likes = JSON.parse(likesString);
+    
+    console.log(index);
+    function addLike(index) {
+      let articles = JSON.parse(articlesString);
+    
+      let likes = JSON.parse(likes);
+      let like=0;
+        if (index >= 0 && index < articles.length) {
+            like++;
+            console.log(like);
+            likes.push(index,like);
+            console.log(`Liked article '${articles[index].title}'. Total likes: ${likes[index].like}`);
+        } else {
+            console.log(`Invalid index ${index}.`);
+        }
+    }*/
+
+
+    let likesString = localStorage.getItem('likes');
+    let likes = likesString ? JSON.parse(likesString) : [];
+
+    //console.log(index);
+
+    function addLike() {
+      if (index >= 0 && index < articles.length) {
+        let like = 0;
+        if (!likes[index]) {
+          likes[index] = 0; // Initialize likes for this article if not already initialized
+        }
+        like = 1;
+        likes[index] = like;
+        //console.log(like);
+        /*console.log(`Liked article '${articles[index].title}'. Total likes: ${like}`);
+        document.getElementById("nL").textContent=" "+like;*/
+        dislikes[index]=0;
+
+        localStorage.setItem('likes', JSON.stringify(likes));
+        localStorage.setItem('dislikes', JSON.stringify(dislikes));
+      } else {
+        console.log(`Invalid index ${index}.`);
+      }
+    }
+    let dislikesString = localStorage.getItem('dislikes');
+    let dislikes = dislikesString ? JSON.parse(dislikesString) : [];
+
+
+    function addDislike() {
+
+      if (index >= 0 && index < articles.length) {
+        let dislike = 0;
+        if (!dislikes[index]) {
+          dislikes[index] = 1; // Initialize likes for this article if not already initialized
+          likes[index] = 0;
+        }
+        dislike = 1;
+
+        dislikes[index] = dislike;
+        //console.log(dislike);
+        /*console.log(`Liked article '${articles[index].title}'. Total likes: ${dislike}`);
+        document.getElementById("nD").textContent=" "+dislike;*/
+
+        localStorage.setItem('dislikes', JSON.stringify(dislikes));
+        localStorage.setItem('likes', JSON.stringify(likes));
+      } else {
+        console.log(`Invalid index ${index}.`);
+      }
+    }
 
   </script>
+  <script>
+    let user=localStorage.getItem("user");
+if(user=="" || user==null){
+
+
+
+
+    console.log(likes[index]);
+    console.log(dislikes[index]);
+    if (likes[index] === 1) {
+
+      document.querySelector("#myLink1").style.color = "blue";
+      dislikes[index] = 0;
+
+    }
+    if (dislikes[index] === 1) {
+
+      document.querySelector("#myLink").style.color = "red";
+      likes[index] = 0;
+    }
+    document.querySelector("#myLink1").addEventListener("click", function (event) {
+      event.preventDefault();
+      this.style.color = "blue";
+      document.querySelector("#myLink").style.color = "black";
+
+     
+    });
+
+    document.querySelector("#myLink").addEventListener("click", function (event) {
+      event.preventDefault();
+      this.style.color = "red";
+      document.querySelector("#myLink1").style.color = "black";
+
+
+
+    });}
+
+    else{
+
+
+      let hide=document.getElementById("hLog");
+      let hide1=document.getElementById("hLog1");
+
+      hide.style.display="none";
+      hide1.style.display="none";
+    }
+  </script>
+
 </body>
 
 </html>
